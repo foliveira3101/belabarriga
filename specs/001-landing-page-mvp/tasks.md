@@ -69,8 +69,8 @@
 - [X] T033 [P] [US1] Implement `frontend/src/components/sections/IncludedSection.tsx` — 4-column grid (8 included items) + dark Wellfy callout block at bottom with CTA
 - [X] T034 [P] [US1] Implement `frontend/src/components/layout/Footer.tsx` — dark bg, brand name, nav links, copyright
 - [X] T035 [US1] Compose `frontend/src/pages/LandingPage.tsx` — replace stubs with: Navbar, HeroSection, PainSection, PillarsSection, HowItWorksSection, BenefitsSection, AboutSection, TestimonialsSection, IncludedSection (US2/US3/US4 sections stubbed) (depends on T025–T034)
-- [ ] T036 [P] [US1] Add placeholder images to `frontend/public/images/`: `hero-bg.jpg` (1600×1200 landscape), `specialist.jpg` (800×1000 portrait), `benefits.jpg` (800×1000 portrait)
-- [ ] T037 [US1] Playwright test `frontend/tests/e2e/landing-page.spec.ts`: assert all 9 US1 sections visible, desktop (1280px) and mobile (375px) viewports (depends on T035)
+- [X] T036 [P] [US1] Add placeholder images to `frontend/public/images/`: `hero-bg.jpg` (1600×1200 landscape), `specialist.jpg` (800×1000 portrait), `benefits.jpg` (800×1000 portrait)
+- [X] T037 [US1] Playwright test `frontend/tests/e2e/landing-page.spec.ts`: assert all 9 US1 sections visible, desktop (1280px) and mobile (375px) viewports (depends on T035)
 
 **Checkpoint**: US1 complete — landing page browsable and all content sections render correctly.
 
@@ -98,7 +98,7 @@
 - [X] T046 [US2] Implement `frontend/src/components/LeadForm/LeadMagnetSection.tsx` — left column (lead magnet benefits list), right column (LeadForm); on success: show confirmation message + "Falar no WhatsApp" button (`buildWhatsAppLink('form_success')`); on error: show retry message (depends on T044, T045, T012)
 - [X] T047 [US2] On form success, fire `pushEvent('lead_submitted', { method: 'lead_form' })` in `LeadForm.tsx` — satisfies FR-016/SC-007 (depends on T044, T011)
 - [X] T048 [US2] Plug `LeadMagnetSection` into `frontend/src/pages/LandingPage.tsx` after `IncludedSection` (depends on T046)
-- [ ] T049 [US2] Playwright test `frontend/tests/e2e/lead-form.spec.ts`: happy path (valid submit → success state + WhatsApp button visible), validation errors (empty submit → 3 inline errors), consent required (submit without consent → error) (depends on T048)
+- [X] T049 [US2] Playwright test `frontend/tests/e2e/lead-form.spec.ts`: happy path (valid submit → success state + WhatsApp button visible), validation errors (empty submit → 3 inline errors), consent required (submit without consent → error) (depends on T048)
 
 **Checkpoint**: US2 complete — leads captured, persisted, tracked, and confirmed to visitor.
 
@@ -114,7 +114,7 @@
 - [X] T051 [P] [US3] Wire `buildWhatsAppLink('cta_hero')` to the CTA button in `HeroSection.tsx` (`target="_blank" rel="noopener noreferrer"`)
 - [X] T052 [US3] Implement `frontend/src/components/sections/FinalCtaSection.tsx` — dark bg, radial gradient, headline "Pronta para começar?", WhatsApp CTA button using `buildWhatsAppLink('cta_final')`, "Avaliação gratuita e sem compromisso" label
 - [X] T053 [US3] Plug `FinalCtaSection` into `frontend/src/pages/LandingPage.tsx` after `LeadMagnetSection` (depends on T052, T048)
-- [ ] T054 [P] [US3] Vitest unit test `frontend/src/lib/__tests__/whatsapp.test.ts` — tests all 3 source types, correct number, encoded message, `target=_blank` attribute
+- [X] T054 [P] [US3] Vitest unit test `frontend/src/lib/__tests__/whatsapp.test.ts` — tests all 3 source types, correct number, encoded message, `target=_blank` attribute
 
 **Checkpoint**: US3 complete — all CTAs route visitors to WhatsApp with correct messages.
 
@@ -128,7 +128,7 @@
 
 - [X] T055 [P] [US4] Implement `frontend/src/components/sections/FaqSection.tsx` — shadcn/ui `Accordion` (type `single`, collapsible) with all 6 FAQ items per PRD (results timeline, training frequency, beginners, online/in-person, monitoring, LPF explanation)
 - [X] T056 [US4] Plug `FaqSection` into `frontend/src/pages/LandingPage.tsx` as final section before Footer (depends on T055, T053)
-- [ ] T057 [P] [US4] Playwright test in `frontend/tests/e2e/landing-page.spec.ts`: all 6 FAQ questions present, click first item → answer visible, click again → answer hidden
+- [X] T057 [P] [US4] Playwright test in `frontend/tests/e2e/landing-page.spec.ts`: all 6 FAQ questions present, click first item → answer visible, click again → answer hidden
 
 **Checkpoint**: US4 complete — all 4 user stories implemented. Full landing page functional.
 
@@ -138,15 +138,15 @@
 
 **Purpose**: Observability finalization, CI/CD, deploy, performance, and OWASP gate.
 
-- [ ] T058 [P] Complete `frontend/tests/e2e/landing-page.spec.ts` — add multi-viewport tests (375px mobile, 768px tablet, 1280px desktop) for SC-005 cross-browser requirement
-- [ ] T059 [P] Configure Playwright multi-browser matrix in `frontend/playwright.config.ts` — `chromium` and `webkit` projects; chromium for CI PR checks, webkit for pre-deploy smoke
-- [ ] T060 [P] Add Lighthouse CI step to `.github/workflows/ci-frontend.yml` — assert LCP < 3s under Slow 4G throttle (SC-001); fail PR on regression
-- [ ] T061 [P] Finalize `.github/workflows/ci-frontend.yml` — ESLint, Vitest unit, Playwright chromium, Lighthouse
-- [ ] T062 [P] Finalize `.github/workflows/ci-backend.yml` — `dotnet build`, `dotnet test` (unit + integration with TestContainers)
-- [ ] T063 Create `.github/workflows/deploy.yml` — Azure SWA deploy for frontend (`azure/static-web-apps-deploy`), Azure App Service deploy for backend (`azure/webapps-deploy`) on push to `main`
-- [ ] T064 [P] Document environment variables in Azure portal: App Service settings (connection string, CORS origin, OTLP endpoint), SWA build settings (`VITE_*` vars) per `quickstart.md`
-- [ ] T065 [P] OWASP Top 10 review checklist for `POST /api/leads`: A03 SQL injection (EF Core parameterized — ✅), A05 security misconfiguration (CORS — ✅), A07 rate limiting (✅), A08 integrity (input validation — ✅); document review result in `specs/001-landing-page-mvp/checklists/` — satisfies FR-027
-- [ ] T066 [P] Add ADR note for React Router deferral to `research.md` section 2 — satisfies Constitution I ADR requirement (L1)
+- [X] T058 [P] Complete `frontend/tests/e2e/landing-page.spec.ts` — add multi-viewport tests (375px mobile, 768px tablet, 1280px desktop) for SC-005 cross-browser requirement
+- [X] T059 [P] Configure Playwright multi-browser matrix in `frontend/playwright.config.ts` — `chromium` and `webkit` projects; chromium for CI PR checks, webkit for pre-deploy smoke
+- [X] T060 [P] Add Lighthouse CI step to `.github/workflows/ci-frontend.yml` — assert LCP < 3s under Slow 4G throttle (SC-001); fail PR on regression
+- [X] T061 [P] Finalize `.github/workflows/ci-frontend.yml` — ESLint, Vitest unit, Playwright chromium, Lighthouse
+- [X] T062 [P] Finalize `.github/workflows/ci-backend.yml` — `dotnet build`, `dotnet test` (unit + integration with TestContainers)
+- [X] T063 Create `.github/workflows/deploy.yml` — Azure SWA deploy for frontend (`azure/static-web-apps-deploy`), Azure App Service deploy for backend (`azure/webapps-deploy`) on push to `main`
+- [X] T064 [P] Document environment variables in Azure portal: App Service settings (connection string, CORS origin, OTLP endpoint), SWA build settings (`VITE_*` vars) per `quickstart.md`
+- [X] T065 [P] OWASP Top 10 review checklist for `POST /api/leads`: A03 SQL injection (EF Core parameterized — ✅), A05 security misconfiguration (CORS — ✅), A07 rate limiting (✅), A08 integrity (input validation — ✅); document review result in `specs/001-landing-page-mvp/checklists/` — satisfies FR-027
+- [X] T066 [P] Add ADR note for React Router deferral to `research.md` section 2 — satisfies Constitution I ADR requirement (L1)
 
 ---
 
