@@ -1,0 +1,187 @@
+openapi: "3.1.0"
+info:
+  title: Bela Barriga API – MVP
+  description: |
+    API backend do Método Bela Barriga. MVP expõe apenas o endpoint de captura de leads
+    e os health checks obrigatórios.
+  version: "1.0.0"
+  contact:
+    name: Equipe Bela Barriga
+
+servers:
+  - url: https://api.belabarriga.com.br
+    description: Produção (Azure App Service)
+  - url: http://localhost:5000
+    description: Desenvolvimento local
+
+paths:
+  /api/leads:
+    post:
+      operationId: createLead
+      summary: Registrar um novo lead
+      description: |
+        Recebe os dados de uma visitante que preencheu o formulário de lead magnet.
+        Valida, persiste no banco de dados e retorna o ID do lead criado.
+        
+        Rate limit: 5 requisições por minuto por IP.
+      tags:
+        - Leads
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateLeadRequest"
+            examples:
+              valid:
+                summary: Submissão válida com UTMs
+                value:
+                  nome: "Maria Silva"
+                  whatsapp: "(11) 99999-1234"
+                  email: "maria@email.com"
+                  utm_source: "instagram"
+                  utm_medium: "cpc"
+                  utm_campaign: "lancamento-jul-2026"
+              minimal:
+                summary: Submissão mínima (sem UTMs)
+                value:
+                  nome: "Ana"
+                  whatsapp: "11988887777"
+                  email: "ana@exemplo.com"
+      responses:
+        "201":
+          description: Lead criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateLeadResponse"
+              example:
+                id: "550e8400-e29b-41d4-a716-446655440000"
+        "400":
+          description: Dados de entrada inválidos
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ValidationProblemDetails"
+              example:
+                type: "https://tools.ietf.org/html/rfc7231#section-6.5.1"
+                title: "One or more validation errors occurred."
+                status: 400
+                errors:
+                  email: ["'Email' is not a valid email address."]
+                  whatsapp: ["'WhatsApp' deve estar no formato brasileiro."]
+        "429":
+          description: Rate limit excedido
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+              description: Segundos até o próximo request ser permitido
+        "500":
+          description: Erro interno do servidor
+
+  /health:
+    get:
+      operationId: healthCheck
+      summary: Health check geral
+      tags:
+        - Health
+      responses:
+        "200":
+          description: Serviço saudável
+          content:
+            application/json:
+              example:
+                status: "Healthy"
+        "503":
+          description: Serviço degradado ou não saudável
+
+  /health/ready:
+    get:
+      operationId: healthReady
+      summary: Readiness probe (verifica dependências — DB)
+      tags:
+        - Health
+      responses:
+        "200":
+          description: Pronto para receber tráfego
+        "503":
+          description: Não pronto (ex.: banco de dados inacessível)
+
+  /health/live:
+    get:
+      operationId: healthLive
+      summary: Liveness probe (verifica se o processo está vivo)
+      tags:
+        - Health
+      responses:
+        "200":
+          description: Processo ativo
+
+components:
+  schemas:
+    CreateLeadRequest:
+      type: object
+      required:
+        - nome
+        - whatsapp
+        - email
+      properties:
+        nome:
+          type: string
+          minLength: 2
+          maxLength: 200
+          example: "Maria Silva"
+        whatsapp:
+          type: string
+          maxLength: 20
+          description: |
+            Número de telefone brasileiro. Formatos aceitos:
+            (11) 99999-9999 | 11999999999 | +55 11 99999-9999
+          example: "(11) 99999-1234"
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          example: "maria@email.com"
+        utm_source:
+          type: string
+          maxLength: 100
+          nullable: true
+          example: "instagram"
+        utm_medium:
+          type: string
+          maxLength: 100
+          nullable: true
+          example: "cpc"
+        utm_campaign:
+          type: string
+          maxLength: 100
+          nullable: true
+          example: "lancamento-jul-2026"
+
+    CreateLeadResponse:
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+
+    ValidationProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
