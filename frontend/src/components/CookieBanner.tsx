@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const STORAGE_KEY = 'bela_barriga_cookie_consent';
 
@@ -24,9 +25,9 @@ export function CookieBanner() {
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <p className="text-sm leading-relaxed flex-1" style={{ color: '#a1a1a6' }}>
           Usamos cookies para melhorar sua experiência e analisar o tráfego, conforme a{' '}
-          <a href="#" className="underline underline-offset-2 hover:opacity-80" style={{ color: '#f5a5a5' }}>
+          <Link to="/politica-de-privacidade" className="underline underline-offset-2 hover:opacity-80" style={{ color: '#f5a5a5' }}>
             Política de Privacidade
-          </a>
+          </Link>
           . Ao continuar navegando, você concorda com o uso.
         </p>
         <div className="flex gap-3 flex-shrink-0">

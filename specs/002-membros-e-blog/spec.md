@@ -6,7 +6,7 @@
 
 **Status**: Draft
 
-**Input**: Fase 2 do Roadmap — Método Bela Barriga PRD v2.0. Expande o ecossistema digital além da landing page: área de membros para alunas, blog de conteúdo, automação de e-mails, agendamento online e biblioteca de vídeos.
+**Input**: Fase 2 do Roadmap — Método Bela Barriga PRD v2.0. Expande o ecossistema digital além da landing page: área de membros para alunas construída como plataforma nativa de treinos e dietas (equivalente ao Wellfy), blog de conteúdo, automação de e-mails e agendamento online. Todas as entregas da área de membros — plano alimentar personalizado, aulas estruturadas por fase e vídeos educacionais on-demand — são gerenciadas nativamente pela própria plataforma, sem dependência de sistema externo.
 
 ---
 
@@ -23,8 +23,8 @@ Uma aluna ativa recebe um convite por e-mail após iniciar o programa. Ela cria 
 **Acceptance Scenarios**:
 
 1. **Given** a aluna recebe o convite por e-mail, **When** clica no link de convite, **Then** ela é direcionada para criar senha e ativar sua conta.
-2. **Given** a aluna possui conta ativa, **When** faz login com e-mail e senha ou Google, **Then** vê o painel com plano alimentar, treinos da semana e metas de progresso.
-3. **Given** a especialista atualizou o plano no Wellfy, **When** a aluna acessa o painel, **Then** ela vê as informações atualizadas (sincronização em até 24h).
+2. **Given** a aluna possui conta ativa, **When** faz login com e-mail e senha ou Google, **Then** vê o painel com plano alimentar da semana, aulas da fase atual, vídeos recomendados e metas de progresso.
+3. **Given** a especialista atualizou o plano alimentar ou as aulas no painel administrativo, **When** a aluna acessa o painel, **Then** ela vê as informações atualizadas imediatamente.
 4. **Given** a aluna está na área de membros, **When** acessa "Minha Evolução", **Then** vê gráfico de progresso com medidas e fotos comparativas ao longo do tempo.
 5. **Given** a aluna tem uma dúvida, **When** envia mensagem pelo painel, **Then** a especialista recebe notificação e pode responder na mesma interface.
 6. **Given** a aluna tenta acessar a área de membros sem login, **When** acessa a URL protegida, **Then** é redirecionada para a página de login.
@@ -67,23 +67,41 @@ Uma visitante interessada no programa quer agendar sua avaliação gratuita sem 
 
 ---
 
-### User Story 4 – Aluna acessa biblioteca de vídeos (Priority: P2)
+### User Story 4 – Aluna acessa suas aulas (Priority: P1)
 
-Uma aluna ativa acessa a biblioteca de vídeos na área de membros, encontra vídeos organizados pelos pilares do método (Protocolo LPF, Treinos, Nutrição) e assiste ao conteúdo exclusivo de sua fase atual.
+Uma aluna ativa acessa a seção de aulas na área de membros, encontra as aulas organizadas por semana e fase do programa e assiste ou marca as aulas concluídas para acompanhar seu progresso.
 
-**Why this priority**: A biblioteca de vídeos agrega valor ao programa e diferencia o acompanhamento online do presencial, justificando o investimento da aluna.
+**Why this priority**: As aulas são o núcleo do método e o principal entregável que a aluna consome diariamente — sem elas, o programa não faz sentido.
 
-**Independent Test**: Fazer login como aluna de teste e verificar que os vídeos da fase atual estão acessíveis, organizados e reproduzem corretamente.
+**Independent Test**: Fazer login como aluna de teste e verificar que as aulas da fase atual aparecem organizadas, reproduzem corretamente e permitem marcar como concluída.
 
 **Acceptance Scenarios**:
 
-1. **Given** a aluna acessa "Biblioteca de Vídeos", **When** a página carrega, **Then** vê vídeos organizados por categoria (Protocolo LPF, Treinos, Nutrição, Hábitos).
+1. **Given** a aluna acessa "Minhas Aulas", **When** a página carrega, **Then** vê aulas organizadas por semana e fase do programa, com indicação de quais já foram concluídas.
+2. **Given** a aluna clica em uma aula, **When** o player abre, **Then** a aula reproduz sem necessidade de download, com controles de play/pause/volume.
+3. **Given** a aluna termina de assistir uma aula, **When** marca como concluída, **Then** o progresso é atualizado no painel e a próxima aula é sugerida.
+4. **Given** a aluna não tem acesso a uma aula fora de sua fase atual, **When** tenta acessar, **Then** vê mensagem explicativa sobre a disponibilidade progressiva do conteúdo.
+5. **Given** a especialista publicou uma nova aula, **When** a aluna acessa "Minhas Aulas", **Then** a nova aula aparece na semana/fase correspondente.
+
+---
+
+### User Story 5 – Aluna acessa biblioteca de vídeos educacionais (Priority: P2)
+
+Uma aluna ativa acessa a biblioteca de vídeos educacionais na área de membros, encontra vídeos organizados pelos pilares do método (Protocolo LPF, Nutrição, Hábitos) e assiste ao conteúdo complementar on-demand.
+
+**Why this priority**: Os vídeos educacionais complementam as aulas e aprofundam o conhecimento da aluna sobre o método, mas não são o consumo principal diário.
+
+**Independent Test**: Fazer login como aluna de teste e verificar que os vídeos estão acessíveis, organizados por categoria e reproduzem corretamente.
+
+**Acceptance Scenarios**:
+
+1. **Given** a aluna acessa "Vídeos", **When** a página carrega, **Then** vê vídeos organizados por categoria (Protocolo LPF, Nutrição, Hábitos, Bônus).
 2. **Given** a aluna clica em um vídeo, **When** o player abre, **Then** o vídeo reproduz sem necessidade de download, com controles de play/pause/volume.
 3. **Given** a aluna não tem acesso a um conteúdo premium, **When** tenta acessar, **Then** vê mensagem explicativa e CTA para upgrade de plano.
 
 ---
 
-### User Story 5 – Sistema envia e-mails automáticos para leads e alunas (Priority: P2)
+### User Story 6 – Sistema envia e-mails automáticos para leads e alunas (Priority: P2)
 
 Uma nova lead que preencheu o formulário da landing page recebe automaticamente uma sequência de e-mails de nutrição. Uma aluna ativa recebe check-ins semanais com motivação e lembretes de progresso.
 
@@ -103,7 +121,7 @@ Uma nova lead que preencheu o formulário da landing page recebe automaticamente
 
 ### Edge Cases
 
-- O que acontece quando a integração com o Wellfy está indisponível? O painel deve exibir os dados em cache e mostrar aviso de atualização pendente.
+- O que acontece quando o servidor da plataforma está indisponível? O painel deve exibir mensagem de erro amigável e o último estado conhecido dos dados.
 - O que acontece quando uma aluna tenta fazer login com conta Google que não está cadastrada? Deve ser direcionada para o fluxo de criação de conta.
 - O que acontece quando um horário é agendado simultaneamente por duas visitantes? O sistema deve usar locking para garantir que apenas uma confirmação seja processada.
 - O que acontece quando o serviço de e-mail está indisponível? O sistema deve encorporar a mensagem na fila e retentar em até 30 minutos.
@@ -125,8 +143,8 @@ Uma nova lead que preencheu o formulário da landing page recebe automaticamente
 
 **Área de Membros**
 
-- **FR-006**: O painel da aluna DEVE exibir: plano alimentar da semana, treinos agendados, protocolo LPF ativo e metas de progresso.
-- **FR-007**: O sistema DEVE sincronizar dados do Wellfy para o painel da aluna. [NEEDS CLARIFICATION: O Wellfy oferece API pública para integração? Se não, como é feita a sincronização (manual, webhook, export/import)?]
+- **FR-006**: O painel da aluna DEVE exibir: plano alimentar da semana, aulas da fase atual (com indicador de progresso), vídeos recomendados, protocolo LPF ativo e metas de progresso.
+- **FR-007**: O sistema DEVE gerenciar nativamente os dados de treino e nutrição da aluna (plano alimentar, aulas e progresso) — sem integração com plataforma externa. A especialista gerencia todo o conteúdo pelo painel administrativo da própria plataforma.
 - **FR-008**: A aluna DEVE conseguir registrar medidas (peso, circunferências) e enviar fotos de progresso.
 - **FR-009**: O sistema DEVE exibir histórico de evolução em formato visual (gráfico de linha para métricas numéricas).
 - **FR-010**: A aluna DEVE conseguir enviar mensagens para a especialista. A especialista DEVE receber notificação por e-mail a cada mensagem.
@@ -147,25 +165,33 @@ Uma nova lead que preencheu o formulário da landing page recebe automaticamente
 - **FR-019**: O sistema DEVE permitir cancelamento pelo link no e-mail de confirmação.
 - **FR-020**: Horários já ocupados DEVEM aparecer como indisponíveis e não selecionáveis.
 
-**Biblioteca de Vídeos**
+**Aulas**
 
-- **FR-021**: Os vídeos DEVEM ser organizados por categoria: Protocolo LPF, Treinos, Nutrição, Hábitos.
-- **FR-022**: O player de vídeo DEVE funcionar em dispositivos móveis e desktop sem necessidade de download.
-- **FR-023**: O acesso à biblioteca DEVE ser restrito a alunas com plano ativo.
-- **FR-024**: O sistema DEVE registrar quais vídeos cada aluna assistiu (progresso de consumo de conteúdo).
+- **FR-021**: As aulas DEVEM ser organizadas por semana e fase do programa (ex.: Semana 1 – Fase Ativação, Semana 2 – Fase Fortalecimento).
+- **FR-022**: A aluna DEVE poder marcar uma aula como concluída; o progresso DEVE ser exibido no painel (ex.: 3 de 5 aulas concluídas esta semana).
+- **FR-023**: Cada aula DEVE exibir: título, duração estimada, nível de dificuldade e descrição curta.
+- **FR-024**: O acesso às aulas DEVE ser restrito a alunas com plano ativo; aulas de fases futuras DEVEM ser desbloqueadas progressivamente conforme o programa avança.
+- **FR-025**: O player de aulas DEVE funcionar em dispositivos móveis e desktop sem necessidade de download.
+
+**Biblioteca de Vídeos Educacionais**
+
+- **FR-026**: Os vídeos educacionais DEVEM ser organizados por categoria: Protocolo LPF, Nutrição, Hábitos, Bônus.
+- **FR-027**: O player de vídeo DEVE funcionar em dispositivos móveis e desktop sem necessidade de download.
+- **FR-028**: O acesso à biblioteca DEVE ser restrito a alunas com plano ativo.
+- **FR-029**: O sistema DEVE registrar quais vídeos cada aluna assistiu (progresso de consumo de conteúdo).
 
 **Automação de E-mails**
 
-- **FR-025**: O sistema DEVE disparar e-mail de boas-vindas com o guia gratuito em até 5 minutos após criação de um novo lead.
-- **FR-026**: O sistema DEVE disparar e-mail semanal de check-in para alunas ativas (toda segunda-feira às 8h).
-- **FR-027**: O sistema DEVE disparar e-mail de reengajamento para leads sem resposta após 14 dias.
-- **FR-028**: A especialista DEVE conseguir criar e enviar campanhas de e-mail segmentadas por: todos os leads, alunas ativas, ex-alunas.
-- **FR-029**: Todos os e-mails DEVEM incluir link de descadastro funcional (conformidade LGPD/CAN-SPAM).
+- **FR-030**: O sistema DEVE disparar e-mail de boas-vindas com o guia gratuito em até 5 minutos após criação de um novo lead.
+- **FR-031**: O sistema DEVE disparar e-mail semanal de check-in para alunas ativas (toda segunda-feira às 8h).
+- **FR-032**: O sistema DEVE disparar e-mail de reengajamento para leads sem resposta após 14 dias.
+- **FR-033**: A especialista DEVE conseguir criar e enviar campanhas de e-mail segmentadas por: todos os leads, alunas ativas, ex-alunas.
+- **FR-034**: Todos os e-mails DEVEM incluir link de descadastro funcional (conformidade LGPD/CAN-SPAM).
 
 **Painel Administrativo**
 
-- **FR-030**: A especialista DEVE ter acesso a painel administrativo para: gerenciar alunas, criar conteúdo de blog, configurar disponibilidade de agenda e enviar campanhas de e-mail.
-- **FR-031**: O painel administrativo DEVE ser acessível apenas por usuários com perfil `admin` (autenticação via Microsoft Entra ID conforme constituição).
+- **FR-035**: A especialista DEVE ter acesso a painel administrativo para: gerenciar alunas, publicar aulas, criar conteúdo de blog e vídeos, configurar disponibilidade de agenda e enviar campanhas de e-mail.
+- **FR-036**: O painel administrativo DEVE ser acessível apenas por usuários com perfil `admin` (autenticação via Microsoft Entra ID conforme constituição).
 
 ### Key Entities
 
@@ -174,7 +200,9 @@ Uma nova lead que preencheu o formulário da landing page recebe automaticamente
 - **Evolução**: Registro de progresso. Atributos: id, aluna_id, data, peso, medidas (json), foto_url, notas.
 - **Artigo**: Post do blog. Atributos: id, titulo, slug, conteudo, categoria, tags, imagem_capa_url, meta_description, status (rascunho, publicado), published_at.
 - **Agendamento**: Reserva de horário. Atributos: id, nome, email, whatsapp, motivo, data_hora, status (confirmado, cancelado), created_at.
-- **Video**: Conteúdo da biblioteca. Atributos: id, titulo, descricao, categoria, duracao, url_player, thumbnail_url, ativo.
+- **Aula**: Aula estruturada do programa. Atributos: id, titulo, descricao, semana, fase, duracao_minutos, nivel_dificuldade, url_player, thumbnail_url, ativo, ordem.
+- **ProgressoAula**: Registro de conclusão de aula por aluna. Atributos: id, aluna_id, aula_id, concluida_em.
+- **Video**: Conteúdo educacional on-demand da biblioteca. Atributos: id, titulo, descricao, categoria (protocolo_lpf | nutricao | habitos | bonus), duracao, url_player, thumbnail_url, ativo.
 - **Lead** *(existente — herdado da Fase 1)*: Extendido com `email_status` (inscrito, descadastrado) e `sequencia_ativa`.
 - **EmailEvento**: Log de automação. Atributos: id, destinatario_email, tipo (boas_vindas, check_in, reengajamento, campanha), status (enviado, falhou), sent_at.
 
@@ -197,7 +225,7 @@ Uma nova lead que preencheu o formulário da landing page recebe automaticamente
 
 ## Assumptions
 
-- A integração com o Wellfy será viável — assumimos que o Wellfy oferece alguma forma de exportação de dados (API, webhook ou export manual) que permita popular o painel da aluna; o mecanismo exato será definido após contato com o Wellfy.
+- A plataforma gerencia nativamente todos os dados de treino e nutrição (plano alimentar, aulas, progresso de alunas) — não há integração com sistema externo. O conteúdo é criado e publicado pela especialista diretamente no painel administrativo.
 - O agendamento online, em caso de não integração nativa com Google Calendar, exibirá os horários configurados manualmente pela especialista no painel admin; integração com calendário externo é desejável mas não bloqueante para o MVP desta fase.
 - O armazenamento de vídeos utilizará um serviço de hospedagem de vídeo externo (ex.: Vimeo, Cloudflare Stream ou Azure Media Services); a escolha exata será feita no plano técnico.
 - O serviço de e-mail transacional utilizará um provedor externo (ex.: SendGrid, Resend, ou Amazon SES); a plataforma específica será definida no plano técnico com base em custo e features.
