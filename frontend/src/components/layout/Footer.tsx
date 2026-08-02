@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const NAV_LINKS = [
   { label: 'O Método', href: '#metodo' },
@@ -9,6 +9,10 @@ const NAV_LINKS = [
 ];
 
 export function Footer() {
+  const { pathname } = useLocation();
+  const isHomePage = pathname === '/';
+  const getSectionHref = (sectionHref: string) => (isHomePage ? sectionHref : `/${sectionHref}`);
+
   return (
     <footer className="py-12" style={{ background: '#1d1d1f', borderTop: '1px solid #2d2d2f' }}>
       <div className="max-w-6xl mx-auto px-6">
@@ -19,7 +23,7 @@ export function Footer() {
           </div>
           <div className="flex items-center gap-6 flex-wrap justify-center">
             {NAV_LINKS.map((l) => (
-              <a key={l.label} href={l.href} className="text-xs hover:opacity-60 transition-opacity" style={{ color: '#a1a1a6' }}>{l.label}</a>
+              <a key={l.label} href={getSectionHref(l.href)} className="text-xs hover:opacity-60 transition-opacity" style={{ color: '#a1a1a6' }}>{l.label}</a>
             ))}
           </div>
           <div className="flex flex-col items-center md:items-end gap-1">

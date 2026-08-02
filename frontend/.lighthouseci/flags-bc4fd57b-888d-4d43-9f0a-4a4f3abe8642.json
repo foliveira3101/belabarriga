@@ -1,0 +1,1 @@
+{"chromeFlags":"--no-sandbox --disable-dev-shm-usage --disable-gpu --headless=new","blockedUrlPatterns":["https://www.googletagmanager.com/*","https://www.google-analytics.com/*","https://fonts.googleapis.com/*","https://fonts.gstatic.com/*"],"throttlingMethod":"devtools","onlyCategories":["performance"]}

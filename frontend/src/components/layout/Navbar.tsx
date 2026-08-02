@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { buildWhatsAppLink } from '../../lib/whatsapp';
 
 const NAV_LINKS = [
@@ -12,6 +13,9 @@ const NAV_LINKS = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { pathname } = useLocation();
+  const isHomePage = pathname === '/';
+  const getSectionHref = (sectionHref: string) => (isHomePage ? sectionHref : `/${sectionHref}`);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -35,7 +39,7 @@ export function Navbar() {
 
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((l) => (
-            <a key={l.label} href={l.href} className="text-sm font-medium hover:opacity-60 transition-opacity" style={{ color: 'var(--foreground)' }}>
+            <a key={l.label} href={getSectionHref(l.href)} className="text-sm font-medium hover:opacity-60 transition-opacity" style={{ color: 'var(--foreground)' }}>
               {l.label}
             </a>
           ))}
@@ -61,7 +65,7 @@ export function Navbar() {
       <div className="md:hidden overflow-hidden transition-all duration-300" style={{ maxHeight: mobileOpen ? '400px' : '0', background: 'rgba(255,255,255,0.98)', backdropFilter: 'blur(20px)' }}>
         <div className="px-6 py-4 flex flex-col gap-4 border-t" style={{ borderColor: 'var(--border)' }}>
           {NAV_LINKS.map((l) => (
-            <a key={l.label} href={l.href} className="text-sm font-medium py-2" style={{ color: 'var(--foreground)' }} onClick={() => setMobileOpen(false)}>
+            <a key={l.label} href={getSectionHref(l.href)} className="text-sm font-medium py-2" style={{ color: 'var(--foreground)' }} onClick={() => setMobileOpen(false)}>
               {l.label}
             </a>
           ))}
