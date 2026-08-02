@@ -1,6 +1,6 @@
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1567013514336-6de53c9e7e63?w=1600&h=1200&fit=crop&auto=format"

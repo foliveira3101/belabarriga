@@ -13,7 +13,7 @@ const INCLUDED = [
 
 export function IncludedSection() {
   return (
-    <section className="py-28 md:py-36" style={{ background: '#ffffff' }}>
+    <section id="incluso" className="py-28 md:py-36" style={{ background: '#ffffff' }}>
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center mb-16">
           <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: '#c96b6b' }}>O que está incluso</p>

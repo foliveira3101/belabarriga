@@ -4,11 +4,11 @@ import { test, expect } from '@playwright/test';
 const SECTIONS = [
   { id: 'hero', name: 'HeroSection' },
   { id: 'dor', name: 'PainSection' },
-  { id: 'pilares', name: 'PillarsSection' },
-  { id: 'metodo', name: 'HowItWorksSection' },
+  { id: 'metodo', name: 'PillarsSection' },
+  { id: 'como-funciona', name: 'HowItWorksSection' },
   { id: 'beneficios', name: 'BenefitsSection' },
   { id: 'especialista', name: 'AboutSection' },
-  { id: 'depoimentos', name: 'TestimonialsSection' },
+  { id: 'resultados', name: 'TestimonialsSection' },
   { id: 'incluso', name: 'IncludedSection' },
   { id: 'cadastro', name: 'LeadMagnetSection' },
 ];

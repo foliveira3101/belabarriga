@@ -11,7 +11,7 @@ const PAIN_POINTS = [
 
 export function PainSection() {
   return (
-    <section className="py-28 md:py-36" style={{ background: '#1d1d1f' }}>
+    <section id="dor" className="py-28 md:py-36" style={{ background: '#1d1d1f' }}>
       <div className="max-w-6xl mx-auto px-6">
         <div className="max-w-xl mb-16">
           <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: '#c96b6b' }}>Você se identifica?</p>

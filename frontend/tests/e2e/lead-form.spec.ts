@@ -24,8 +24,8 @@ test.describe('US2 — Lead form', () => {
 
     await page.getByRole('button', { name: /quero/i }).click();
 
-    // Success state: confirmation message and WhatsApp button
-    await expect(page.getByText(/WhatsApp/i)).toBeVisible({ timeout: 5000 });
+    // Success state: the 'Falar no WhatsApp' link is unique to the success state
+    await expect(page.getByRole('link', { name: 'Falar no WhatsApp' })).toBeVisible({ timeout: 5000 });
   });
 
   test('validation errors: empty submit shows 3 inline errors', async ({ page }) => {
