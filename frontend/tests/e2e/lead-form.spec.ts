@@ -15,7 +15,7 @@ test.describe('US2 — Lead form', () => {
     await page.locator('#cadastro').scrollIntoViewIfNeeded();
 
     await page.getByPlaceholder('Como posso te chamar?').fill('Maria Silva');
-    await page.getByPlaceholder('(XX) XXXXX-XXXX').fill('(11) 99999-9999');
+    await page.getByPlaceholder('(11) 99999-9999').fill('(11) 99999-9999');
     await page.getByPlaceholder('seu@email.com').fill('maria@example.com');
 
     // LGPD consent checkbox
@@ -49,7 +49,7 @@ test.describe('US2 — Lead form', () => {
     await page.locator('#cadastro').scrollIntoViewIfNeeded();
 
     await page.getByPlaceholder('Como posso te chamar?').fill('Maria Silva');
-    await page.getByPlaceholder('(XX) XXXXX-XXXX').fill('(11) 99999-9999');
+    await page.getByPlaceholder('(11) 99999-9999').fill('(11) 99999-9999');
     await page.getByPlaceholder('seu@email.com').fill('maria@example.com');
     // Do NOT check consent
 
@@ -71,3 +71,4 @@ test.describe('US2 — Lead form', () => {
     await expect(page.locator('#cadastro')).toContainText(/e-mail|email|inválido/i);
   });
 });
+
