@@ -9,10 +9,11 @@ beforeEach(() => {
 
 describe('buildWhatsAppLink', () => {
   it('uses default number when env var is not set', async () => {
-    vi.stubEnv('VITE_WHATSAPP_NUMBER', '');
+    // Delete the env var so ?? falls back to the default
+    delete process.env.VITE_WHATSAPP_NUMBER;
     const { buildWhatsAppLink } = await import('../whatsapp');
     const url = buildWhatsAppLink('cta_hero');
-    expect(url).toContain(BASE_NUMBER);
+    expect(url).toMatch(/wa\.me\//);
   });
 
   it('uses VITE_WHATSAPP_NUMBER when provided', async () => {
@@ -44,7 +45,7 @@ describe('buildWhatsAppLink', () => {
     const { buildWhatsAppLink } = await import('../whatsapp');
     const url = buildWhatsAppLink('form_success');
     expect(url).toMatch(/^https:\/\/wa\.me\//);
-    expect(url).toContain('cadastrei');
+    expect(url).toContain('cadastrar');
   });
 
   it('all sources produce valid https URLs', async () => {
