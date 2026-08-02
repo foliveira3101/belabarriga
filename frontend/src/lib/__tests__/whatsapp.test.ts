@@ -9,11 +9,11 @@ beforeEach(() => {
 
 describe('buildWhatsAppLink', () => {
   it('uses default number when env var is not set', async () => {
-    // Delete the env var so ?? falls back to the default
-    delete process.env.VITE_WHATSAPP_NUMBER;
+    // Not stubbing — env var is undefined in test env, fallback applies
+    vi.unstubAllEnvs();
     const { buildWhatsAppLink } = await import('../whatsapp');
     const url = buildWhatsAppLink('cta_hero');
-    expect(url).toMatch(/wa\.me\//);
+    expect(url).toMatch(/^https:\/\/wa\.me\/\d+\?text=/);
   });
 
   it('uses VITE_WHATSAPP_NUMBER when provided', async () => {
